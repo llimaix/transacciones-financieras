@@ -1,0 +1,78 @@
+<mxfile host="app.diagrams.net" agent="TranscFins" version="24.0.0">
+  <diagram id="seq-exitosa" name="1 - Transferencia exitosa">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="op" value="Operador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="opL" style="html=1;points=[];perimeter=orthogonalPerimeter;endArrow=none;dashed=1;" edge="1" parent="1" source="op"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="100" as="sourcePoint" /><mxPoint x="75" y="820" as="targetPoint" /></mxGeometry></mxCell>
+
+        <mxCell id="api" value="C-01 API" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="120" height="780" as="geometry" /></mxCell>
+        <mxCell id="ts" value="C-02 TransferenciaService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="380" y="40" width="160" height="780" as="geometry" /></mxCell>
+        <mxCell id="vf" value="C-05 ValidadorFondos" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="600" y="40" width="150" height="780" as="geometry" /></mxCell>
+        <mxCell id="pt" value="C-06 ProcesadorTransaccion" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="810" y="40" width="170" height="780" as="geometry" /></mxCell>
+        <mxCell id="cr" value="C-07 CuentaRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="1040" y="40" width="150" height="780" as="geometry" /></mxCell>
+        <mxCell id="hr" value="C-08 HistorialRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="1240" y="40" width="150" height="780" as="geometry" /></mxCell>
+
+        <mxCell id="m1" value="transferir(origen, destino, monto, ref)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="130" as="sourcePoint" /><mxPoint x="260" y="130" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m2" value="ejecutarTransferencia(solicitud)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="170" as="sourcePoint" /><mxPoint x="460" y="170" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m3" value="validarExistencia(origen, destino)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="210" as="sourcePoint" /><mxPoint x="675" y="210" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m4" value="obtener(origen), obtener(destino)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="675" y="250" as="sourcePoint" /><mxPoint x="1115" y="250" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m5" value="validarFondos(origen, monto)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="300" as="sourcePoint" /><mxPoint x="675" y="300" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m6" value="esDuplicada(ref)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="340" as="sourcePoint" /><mxPoint x="675" y="340" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m7" value="existeReferencia(ref) : no existe" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="675" y="380" as="sourcePoint" /><mxPoint x="1315" y="380" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m8" value="procesar(origen, destino, monto)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="430" as="sourcePoint" /><mxPoint x="895" y="430" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="note" value="Transacción ACID: débito + crédito (todo o nada)" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="810" y="450" width="380" height="30" as="geometry" /></mxCell>
+        <mxCell id="m9" value="debitar(origen, monto)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="895" y="500" as="sourcePoint" /><mxPoint x="1115" y="500" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m10" value="acreditar(destino, monto)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="895" y="540" as="sourcePoint" /><mxPoint x="1115" y="540" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m11" value="guardar(Transaccion EXITOSA)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="590" as="sourcePoint" /><mxPoint x="1315" y="590" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m12" value="comprobante" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="640" as="sourcePoint" /><mxPoint x="75" y="640" as="targetPoint" /></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq-rechazada" name="2 - Fondos insuficientes">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="op2" value="Operador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="api2" value="C-01 API" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="120" height="560" as="geometry" /></mxCell>
+        <mxCell id="ts2" value="C-02 TransferenciaService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="380" y="40" width="160" height="560" as="geometry" /></mxCell>
+        <mxCell id="vf2" value="C-05 ValidadorFondos" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="600" y="40" width="150" height="560" as="geometry" /></mxCell>
+        <mxCell id="cr2" value="C-07 CuentaRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="810" y="40" width="150" height="560" as="geometry" /></mxCell>
+        <mxCell id="hr2" value="C-08 HistorialRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="1010" y="40" width="150" height="560" as="geometry" /></mxCell>
+
+        <mxCell id="n1" value="transferir(origen, destino, monto, ref)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="130" as="sourcePoint" /><mxPoint x="260" y="130" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="n2" value="ejecutarTransferencia(solicitud)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="170" as="sourcePoint" /><mxPoint x="460" y="170" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="n3" value="validarFondos(origen, monto)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="210" as="sourcePoint" /><mxPoint x="675" y="210" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="n4" value="getSaldo() : saldo &lt; monto" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="675" y="250" as="sourcePoint" /><mxPoint x="885" y="250" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="n5" value="fondos insuficientes" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="675" y="300" as="sourcePoint" /><mxPoint x="460" y="300" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="noteR" value="No se modifica ningún saldo" style="shape=note;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1"><mxGeometry x="380" y="320" width="220" height="30" as="geometry" /></mxCell>
+        <mxCell id="n6" value="guardar(Transaccion RECHAZADA)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="380" as="sourcePoint" /><mxPoint x="1085" y="380" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="n7" value="error: fondos insuficientes" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="430" as="sourcePoint" /><mxPoint x="75" y="430" as="targetPoint" /></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq-duplicada" name="3 - Duplicada detectada">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="op3" value="Operador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="60" y="40" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="api3" value="C-01 API" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="120" height="480" as="geometry" /></mxCell>
+        <mxCell id="ts3" value="C-02 TransferenciaService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="380" y="40" width="160" height="480" as="geometry" /></mxCell>
+        <mxCell id="vf3" value="C-05 ValidadorFondos" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="600" y="40" width="150" height="480" as="geometry" /></mxCell>
+        <mxCell id="hr3" value="C-08 HistorialRepository" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="810" y="40" width="150" height="480" as="geometry" /></mxCell>
+
+        <mxCell id="p1" value="transferir(origen, destino, monto, ref)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="130" as="sourcePoint" /><mxPoint x="260" y="130" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="p2" value="ejecutarTransferencia(solicitud)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="170" as="sourcePoint" /><mxPoint x="460" y="170" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="p3" value="esDuplicada(ref)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="210" as="sourcePoint" /><mxPoint x="675" y="210" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="p4" value="existeReferencia(ref) : ya existe" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="675" y="250" as="sourcePoint" /><mxPoint x="885" y="250" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="noteD" value="Idempotencia (RB-05): no se re-ejecuta" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="380" y="280" width="260" height="30" as="geometry" /></mxCell>
+        <mxCell id="p5" value="buscar(ref) : resultado original" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="340" as="sourcePoint" /><mxPoint x="885" y="340" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="p6" value="&quot;Operación duplicada detectada&quot;" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="390" as="sourcePoint" /><mxPoint x="75" y="390" as="targetPoint" /></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

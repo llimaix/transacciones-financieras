@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casos de Prueba · Sistema de Transferencias Financieras</title>
+<style>
+  :root {
+    --brand:#0a5c5c; --brand-dark:#073f3f; --brand-light:#e6f2f2;
+    --accent:#1b9e77; --danger:#c0392b; --danger-bg:#fdecea; --info:#2b6cb0; --info-bg:#e8f1fb;
+    --ink:#1a2b2b; --muted:#6b7f7f; --line:#dce7e7; --bg:#eef3f3;
+    --radius:14px; --shadow:0 8px 28px rgba(10,40,40,.10);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55; padding:40px 20px; }
+  .doc-title { text-align:center; font-size:24px; color:var(--brand-dark); }
+  .doc-sub { text-align:center; color:var(--muted); margin-bottom:36px; font-size:13px; }
+
+  .case { max-width:900px; margin:0 auto 30px; background:#fff; border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; display:flex; }
+  .case .info { flex:1; padding:22px 24px; }
+  .case .visual { width:320px; background:#f7fafa; border-left:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; padding:22px; }
+
+  .cid { display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--brand);
+    padding:3px 10px; border-radius:20px; letter-spacing:.03em; }
+  .tag { display:inline-block; font-size:10.5px; font-weight:600; padding:2px 9px; border-radius:20px; margin-left:6px; }
+  .tag.normal { background:#e5f4ee; color:var(--accent); }
+  .tag.alterno { background:var(--info-bg); color:var(--info); }
+  .tag.error { background:var(--danger-bg); color:var(--danger); }
+  .ctitle { font-size:18px; color:var(--brand-dark); margin:12px 0 4px; }
+  .refs { font-size:11px; color:var(--muted); margin-bottom:14px; }
+  .lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--brand); margin:14px 0 4px; }
+  .hist { font-size:13.5px; color:#33484a; }
+  ol.steps { margin:4px 0 0 18px; font-size:13px; }
+  ol.steps li { margin:3px 0; }
+  .expect { background:var(--brand-light); border-radius:10px; padding:10px 12px; font-size:12.5px; margin-top:10px; }
+  .expect b { color:var(--brand-dark); }
+
+  /* Mini-pantalla de alta fidelidad */
+  .phone { width:270px; background:#fff; border-radius:22px; box-shadow:0 6px 20px rgba(10,40,40,.14);
+    overflow:hidden; border:1px solid var(--line); }
+  .phone .notch { height:20px; background:var(--brand-dark); }
+  .ps { padding:16px; min-height:300px; display:flex; flex-direction:column; }
+  .pbar { background:var(--brand); color:#fff; margin:-16px -16px 14px; padding:12px 16px; font-size:13px; font-weight:600; }
+  .rc { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:26px; color:#fff; margin:6px auto 10px; }
+  .rc.ok{background:var(--accent)} .rc.no{background:var(--danger)} .rc.inf{background:var(--info)}
+  .center { text-align:center; }
+  .stit { font-size:15px; font-weight:700; }
+  .ssub { font-size:11px; color:var(--muted); margin-bottom:10px; }
+  .sum { background:#f7fafa; border:1px solid var(--line); border-radius:9px; padding:10px; font-size:11.5px; text-align:left; }
+  .sum .r { display:flex; justify-content:space-between; padding:3px 0; }
+  .sum .r span:first-child{color:var(--muted)}
+  .sum .r.tot{border-top:1px solid var(--line);margin-top:4px;padding-top:6px;font-weight:700}
+  .albox { border-radius:8px; padding:9px 10px; font-size:11.5px; text-align:left; font-weight:600; }
+  .albox.no{background:var(--danger-bg);color:var(--danger)} .albox.inf{background:var(--info-bg);color:var(--info)}
+  .albox small{display:block;font-weight:400;margin-top:3px}
+  .field { font-size:11px; }
+  .field .inp{border:1px solid var(--line);border-radius:7px;padding:7px 9px;background:#fbfdfd;margin:3px 0 2px;}
+  .field .inp.bad{border-color:var(--danger);background:#fff6f5}
+  .ferr{color:var(--danger);font-size:10.5px}
+  .btn{border-radius:8px;padding:8px;text-align:center;font-size:12px;font-weight:600;margin-top:8px}
+  .btn.p{background:var(--brand);color:#fff} .btn.g{background:#eef4f4;color:var(--muted)}
+  .txr{display:flex;justify-content:space-between;font-size:11px;padding:7px 2px;border-bottom:1px solid var(--line)}
+  .pill{font-size:9px;padding:1px 7px;border-radius:12px;font-weight:600}
+  .pill.ok{background:#e5f4ee;color:var(--accent)} .pill.no{background:var(--danger-bg);color:var(--danger)}
+  .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center}
+  .empty .big{font-size:34px;margin-bottom:8px}
+  @media print { body{background:#fff} .case{break-inside:avoid;box-shadow:none} }
+</style>
+</head>
+<body>
+  <h1 class="doc-title">Casos de Prueba · Sistema de Transferencias Financieras</h1>
+  <p class="doc-sub">Historia, validación y pantalla asociada · CP-01 a CP-09 · desplázate y captura cada tarjeta</p>
+
+  <!-- CP-01 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-01</span><span class="tag normal">Normal</span></div>
+      <h2 class="ctitle">Transferencia exitosa</h2>
+      <div class="refs">CU-02 · RF-03, RF-04, RF-06, RF-07</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">El operador mueve Q500.00 de CTA-10001 a CTA-10025. Ambas cuentas existen y el origen tiene saldo suficiente (Q1,000.00). Es el camino feliz: validar, procesar de forma atómica y entregar comprobante.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Ingresar datos y confirmar.</li><li>Validar existencia, fondos, monto y duplicados.</li><li>Ejecutar débito y crédito como transacción ACID.</li><li>Registrar EXITOSA y emitir comprobante.</li></ol>
+      <div class="expect"><b>Resultado:</b> origen Q500.00, destino +Q500.00, transacción EXITOSA, comprobante con referencia única.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps center">
+      <div class="rc ok">✓</div><div class="stit">Transferencia exitosa</div><div class="ssub">Comprobante TRX-000457</div>
+      <div class="sum"><div class="r"><span>Origen</span><b>CTA-10001</b></div><div class="r"><span>Destino</span><b>CTA-10025</b></div><div class="r"><span>Fecha</span><b>14/10 10:32</b></div><div class="r"><span>Estado</span><b style="color:var(--accent)">EXITOSA</b></div><div class="r tot"><span>Monto</span><b>Q 300.00</b></div></div>
+      <div class="btn p">Nueva transferencia</div><div class="btn g">Ir al inicio</div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-02 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-02</span><span class="tag alterno">Alterno</span></div>
+      <h2 class="ctitle">Fondos insuficientes</h2>
+      <div class="refs">CU-02 / CU-03 · RF-04</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">El operador intenta transferir Q500.00 desde CTA-10001, pero esa cuenta solo tiene Q100.00. El sistema debe detenerse antes de mover dinero y explicar el motivo, sin alterar saldos.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Ingresar datos y confirmar.</li><li>Validar fondos: saldo &lt; monto.</li><li>Rechazar y registrar RECHAZADA.</li></ol>
+      <div class="expect"><b>Resultado:</b> operación rechazada, saldos sin cambios, transacción RECHAZADA con motivo "Fondos insuficientes".</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps center">
+      <div class="rc no">✕</div><div class="stit">Transferencia rechazada</div><div class="ssub">No se modificó ningún saldo</div>
+      <div class="albox no">Fondos insuficientes<small>El saldo de CTA-10001 (Q 100.00) es menor al monto solicitado (Q 500.00).</small></div>
+      <div class="btn p">Intentar de nuevo</div><div class="btn g">Ir al inicio</div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-03 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-03</span><span class="tag error">Error</span></div>
+      <h2 class="ctitle">Cuenta destino inexistente</h2>
+      <div class="refs">CU-02 / CU-03 · RF-04</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">El operador escribe por error una cuenta destino que no existe (CTA-99999). El sistema debe rechazar en la validación, antes de tocar saldos, e indicar el problema.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Ingresar destino CTA-99999 y confirmar.</li><li>Validar existencia: no se encuentra.</li><li>Rechazar y registrar el intento.</li></ol>
+      <div class="expect"><b>Resultado:</b> mensaje "Cuenta destino no encontrada", sin cambios en saldos, transacción RECHAZADA.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps center">
+      <div class="rc no">✕</div><div class="stit">Transferencia rechazada</div><div class="ssub">&nbsp;</div>
+      <div class="albox no">Cuenta destino no encontrada<small>Verifica el número de cuenta CTA-99999.</small></div>
+      <div class="btn p">Intentar de nuevo</div><div class="btn g">Ir al inicio</div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-04 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-04</span><span class="tag error">Error</span></div>
+      <h2 class="ctitle">Transferencia duplicada</h2>
+      <div class="refs">CU-02 / CU-03 · RF-05</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">Por un reintento (doble clic o reenvío de red) llega otra vez una transferencia con la misma referencia única (REF-000457) de una operación ya ejecutada. El sistema no debe mover el dinero de nuevo: reconoce el duplicado y devuelve el resultado original. Es la garantía de idempotencia.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Reenviar solicitud con referencia ya procesada.</li><li>Detectar la referencia repetida.</li><li>Devolver el resultado original sin re-ejecutar.</li></ol>
+      <div class="expect"><b>Resultado:</b> sin segundo movimiento, se devuelve el resultado original, mensaje "Operación duplicada detectada", saldos sin cambios.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps center">
+      <div class="rc inf">ⓘ</div><div class="stit">Operación duplicada</div><div class="ssub">detectada</div>
+      <div class="albox inf">Esta operación ya fue procesada (REF-000457).<small>Resultado original: Q 300.00 · EXITOSA</small></div>
+      <div class="btn p">Ver comprobante</div><div class="btn g">Ir al inicio</div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-05 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-05</span><span class="tag error">Error</span></div>
+      <h2 class="ctitle">Monto inválido</h2>
+      <div class="refs">CU-02 / CU-03 · RF-04</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">El operador intenta transferir un monto de Q0.00 o negativo. El sistema debe impedirlo en la validación del formulario, antes de procesar nada.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Ingresar monto Q0.00 o negativo y confirmar.</li><li>Validar monto y rechazar.</li></ol>
+      <div class="expect"><b>Resultado:</b> operación rechazada antes de procesar, mensaje "Monto inválido", saldos sin cambios.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps">
+      <div class="pbar">Nueva transferencia</div>
+      <div class="field">Cuenta destino<div class="inp">CTA-10025</div></div>
+      <div class="field">Monto<div class="inp bad">Q 0.00</div><div class="ferr">⚠ Monto inválido: debe ser mayor a Q 0.00</div></div>
+      <div style="display:flex;gap:8px"><div class="btn g" style="flex:1">Cancelar</div><div class="btn p" style="flex:1">Continuar</div></div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-06 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-06</span><span class="tag normal">Normal</span></div>
+      <h2 class="ctitle">Creación de cuenta exitosa</h2>
+      <div class="refs">CU-01 · RF-01</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">Un administrador registra una cuenta nueva con datos válidos. No existe otra con el identificador propuesto, así que el sistema la crea con ID único, activa y con saldo inicial en cero.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Ingresar datos y solicitar creación.</li><li>Validar datos obligatorios y unicidad del ID.</li><li>Registrar la cuenta y confirmar.</li></ol>
+      <div class="expect"><b>Resultado:</b> cuenta con ID único, estado ACTIVA y saldo Q0.00; creación confirmada.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps center">
+      <div class="rc ok">✓</div><div class="stit">Cuenta creada</div><div class="ssub">&nbsp;</div>
+      <div class="sum"><div class="r"><span>Identificador</span><b>CTA-10090</b></div><div class="r"><span>Titular</span><b>Nuevo Cliente</b></div><div class="r"><span>Estado</span><b style="color:var(--accent)">ACTIVA</b></div><div class="r tot"><span>Saldo inicial</span><b>Q 0.00</b></div></div>
+      <div class="btn p">Crear otra</div><div class="btn g">Ir al inicio</div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-07 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-07</span><span class="tag error">Error</span></div>
+      <h2 class="ctitle">Identificador de cuenta duplicado</h2>
+      <div class="refs">CU-01 · RF-01</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">El administrador intenta crear una cuenta con un identificador que ya existe (CTA-10025). El sistema debe rechazar la operación y dejar intacta la cuenta original.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Solicitar crear cuenta con ID CTA-10025.</li><li>Detectar que el identificador ya existe.</li><li>Rechazar la creación.</li></ol>
+      <div class="expect"><b>Resultado:</b> operación rechazada, la cuenta original sin cambios, mensaje de identificador duplicado.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps">
+      <div class="pbar">Crear cuenta</div>
+      <div class="field">Identificador<div class="inp bad">CTA-10025</div><div class="ferr">⚠ El identificador ya existe. Usa otro.</div></div>
+      <div style="display:flex;gap:8px"><div class="btn g" style="flex:1">Cancelar</div><div class="btn p" style="flex:1">Crear</div></div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-08 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-08</span><span class="tag normal">Normal</span></div>
+      <h2 class="ctitle">Consulta de historial con resultados</h2>
+      <div class="refs">CU-04 · RF-08</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">Un usuario con permisos revisa el historial de CTA-10001, que tiene 3 transacciones. El sistema verifica permisos y muestra la lista, distinguiendo exitosas de rechazadas.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Acceder al historial y filtrar por CTA-10001.</li><li>Verificar permisos y recuperar transacciones.</li></ol>
+      <div class="expect"><b>Resultado:</b> 3 transacciones con fecha, monto, destino y estado; distingue EXITOSA de RECHAZADA.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps">
+      <div class="pbar">Historial · CTA-10001</div>
+      <div class="txr"><span>14/10 · Q300 · CTA-10025</span><span class="pill ok">✓</span></div>
+      <div class="txr"><span>13/10 · Q500 · CTA-10030</span><span class="pill ok">✓</span></div>
+      <div class="txr"><span>12/10 · Q750 · CTA-10011</span><span class="pill no">✕</span></div>
+      <div class="center" style="font-size:11px;color:var(--muted);margin-top:10px">◀ &nbsp;<b>1</b> 2 3&nbsp; ▶</div>
+    </div></div></div>
+  </div>
+
+  <!-- CP-09 -->
+  <div class="case">
+    <div class="info">
+      <div><span class="cid">CP-09</span><span class="tag alterno">Alterno</span></div>
+      <h2 class="ctitle">Consulta de historial sin resultados</h2>
+      <div class="refs">CU-04 · RF-08</div>
+      <div class="lbl">Historia</div>
+      <p class="hist">El usuario consulta el historial de CTA-10044 para un período sin movimientos. El sistema debe responder con un estado vacío claro, sin error ni pantalla en blanco.</p>
+      <div class="lbl">Validación</div>
+      <ol class="steps"><li>Filtrar por CTA-10044 en período sin transacciones.</li><li>Consultar y no encontrar registros.</li></ol>
+      <div class="expect"><b>Resultado:</b> resultado vacío con mensaje "Sin operaciones"; sin error.</div>
+    </div>
+    <div class="visual"><div class="phone"><div class="notch"></div><div class="ps">
+      <div class="pbar">Historial · CTA-10044</div>
+      <div class="empty"><div class="big">🗂</div>Sin operaciones<br><small>No hay transacciones en el período seleccionado</small></div>
+    </div></div></div>
+  </div>
+
+</body>
+</html>

@@ -1,84 +1,137 @@
 # Diagrama de Clases
 
-> **Responsable:** Wuilli  
-> **Tarea:** T-08  
-> **Estado:** ⬜ Pendiente  
-> **Depende de:** T-06 (Diseño de componentes — Fabiola)
+> **Responsable:** Wuilli
+> **Tarea:** T-08
+> **Estado:** ✅ Completado
+> **Depende de:** T-06 (Diseño de componentes)
 
 ---
 
-## Instrucciones
+## 1. Propósito
 
-1. Revisar `docs/arquitectura/diseno-componentes.md` para conocer los componentes definidos por Fabiola.
-2. Modelar las clases que implementan esos componentes.
-3. Exportar el diagrama como imagen y agregarla a esta carpeta.
+Modelar las clases que implementan los componentes definidos en el diseño de componentes (C-01..C-09), con sus atributos, métodos y relaciones. El diseño concentra la modificación de saldos en una única clase (`ProcesadorTransaccion`) para proteger el invariante financiero.
 
 ---
 
-## Diagrama
+## 2. Diagrama de clases
 
-> Insertar imagen aquí: `diagrama-clases.png`
+```mermaid
+classDiagram
+    class Cuenta {
+        -String id
+        -String titular
+        -Decimal saldo
+        -Boolean activa
+        +debitar(Decimal monto) void
+        +acreditar(Decimal monto) void
+        +getSaldo() Decimal
+        +estaActiva() Boolean
+    }
 
----
+    class Transaccion {
+        -String id
+        -String referenciaUnica
+        -String cuentaOrigen
+        -String cuentaDestino
+        -Decimal monto
+        -DateTime fecha
+        -EstadoTransaccion estado
+        -String motivoRechazo
+    }
 
-## Clases esperadas (base mínima)
+    class EstadoTransaccion {
+        <<enumeration>>
+        EXITOSA
+        RECHAZADA
+        PENDIENTE
+    }
 
-| Clase                   | Responsabilidad                                          | Componente |
-|-------------------------|----------------------------------------------------------|------------|
-| `Cuenta`                | Representa una cuenta bancaria con saldo e ID único      | C-0X       |
-| `Transaccion`           | Registra los datos de cada operación realizada           | C-0X       |
-| `TransferenciaService`  | Orquesta el proceso de transferencia entre cuentas       | C-0X       |
-| `ValidadorFondos`       | Verifica disponibilidad de fondos antes de ejecutar      | C-0X       |
-| `HistorialRepository`   | Almacena y consulta el registro de transacciones         | C-0X       |
+    class TransferenciaService {
+        +ejecutarTransferencia(SolicitudTransferencia) Transaccion
+    }
 
-> Asigna el componente correcto según lo que defina Fabiola en T-06.
+    class CuentaService {
+        +crearCuenta(DatosCuenta) Cuenta
+        +consultarCuenta(String id) Cuenta
+    }
 
----
+    class ConsultaService {
+        +consultarHistorial(Criterios) List~Transaccion~
+    }
 
-## Atributos y métodos sugeridos
+    class ValidadorFondos {
+        +validarExistencia(String idCuenta) Boolean
+        +validarFondos(Cuenta, Decimal monto) Boolean
+        +validarMonto(Decimal monto) Boolean
+        +esDuplicada(String referenciaUnica) Boolean
+    }
 
+    class ProcesadorTransaccion {
+        +procesar(Cuenta origen, Cuenta destino, Decimal monto) Transaccion
+    }
+
+    class CuentaRepository {
+        +obtener(String id) Cuenta
+        +guardar(Cuenta) void
+        +actualizarSaldo(String id, Decimal saldo) void
+    }
+
+    class HistorialRepository {
+        +guardar(Transaccion) void
+        +buscar(Criterios) List~Transaccion~
+        +existeReferencia(String referenciaUnica) Boolean
+    }
+
+    class AdaptadorOnPremise {
+        +invocarServicioExterno(Peticion) Respuesta
+    }
+
+    TransferenciaService ..> ValidadorFondos : usa
+    TransferenciaService ..> ProcesadorTransaccion : usa
+    TransferenciaService ..> HistorialRepository : registra
+    TransferenciaService ..> AdaptadorOnPremise : integra
+    CuentaService ..> CuentaRepository : usa
+    ConsultaService ..> HistorialRepository : consulta
+    ValidadorFondos ..> CuentaRepository : lee saldos
+    ValidadorFondos ..> HistorialRepository : verifica duplicados
+    ProcesadorTransaccion ..> CuentaRepository : debita/acredita
+    ProcesadorTransaccion --> Transaccion : crea
+    Transaccion --> EstadoTransaccion : tiene
+    CuentaRepository --> Cuenta : gestiona
+    HistorialRepository --> Transaccion : gestiona
 ```
-Cuenta
-  - id: String
-  - titular: String
-  - saldo: Decimal
-  - activa: Boolean
-  + debitar(monto): void
-  + acreditar(monto): void
-  + getSaldo(): Decimal
 
-Transaccion
-  - id: String
-  - cuentaOrigen: String
-  - cuentaDestino: String
-  - monto: Decimal
-  - fecha: DateTime
-  - estado: EstadoTransaccion  ← (EXITOSA, RECHAZADA, PENDIENTE)
-
-TransferenciaService
-  + ejecutarTransferencia(origen, destino, monto): Transaccion
-
-ValidadorFondos
-  + validarFondos(cuenta, monto): Boolean
-  + validarExistencia(idCuenta): Boolean
-  + esDuplicada(transaccion): Boolean
-
-HistorialRepository
-  + guardar(transaccion): void
-  + consultarPorCuenta(idCuenta): List<Transaccion>
-```
+> **Versión editable (draw.io):** `diagrama-clases.drawio`.
 
 ---
 
-## Relaciones entre clases
+## 3. Descripción de las clases
 
-| Relación                                    | Tipo          |
-|---------------------------------------------|---------------|
-| `TransferenciaService` usa `ValidadorFondos`| Dependencia   |
-| `TransferenciaService` usa `Cuenta`         | Asociación    |
-| `TransferenciaService` usa `HistorialRepository` | Dependencia |
-| `Transaccion` referencia `Cuenta`           | Asociación    |
+| Clase | Componente | Responsabilidad |
+|-------|------------|-----------------|
+| `Cuenta` | C-07 | Representa una cuenta con saldo e identificador único; sabe debitar y acreditar. |
+| `Transaccion` | C-08 | Registra los datos y el resultado de cada operación. |
+| `EstadoTransaccion` | — | Enumeración del estado: EXITOSA, RECHAZADA, PENDIENTE. |
+| `TransferenciaService` | C-02 | Orquesta la transferencia y controla la idempotencia. |
+| `CuentaService` | C-03 | Crea y consulta cuentas. |
+| `ConsultaService` | C-04 | Consulta el historial según permisos y filtros. |
+| `ValidadorFondos` | C-05 | Valida existencia, monto, fondos y duplicados. |
+| `ProcesadorTransaccion` | C-06 | **Única clase que modifica saldos**, siempre de forma atómica. |
+| `CuentaRepository` | C-07 | Persiste y recupera cuentas. |
+| `HistorialRepository` | C-08 | Persiste y consulta transacciones. |
+| `AdaptadorOnPremise` | C-09 | Traduce llamadas hacia sistemas on-premise (API/SOAP sobre VPN). |
 
 ---
 
-_Completa el diagrama con las clases reales según T-06 y cambia el estado a ✅._
+## 4. Relaciones
+
+| Relación | Tipo |
+|----------|------|
+| `TransferenciaService` → `ValidadorFondos` | Dependencia |
+| `TransferenciaService` → `ProcesadorTransaccion` | Dependencia |
+| `TransferenciaService` → `HistorialRepository` | Dependencia |
+| `ProcesadorTransaccion` → `Cuenta` | Asociación (modifica saldos) |
+| `ProcesadorTransaccion` → `Transaccion` | Creación |
+| `Transaccion` → `EstadoTransaccion` | Composición |
+| `CuentaRepository` → `Cuenta` | Gestión / persistencia |
+| `HistorialRepository` → `Transaccion` | Gestión / persistencia |

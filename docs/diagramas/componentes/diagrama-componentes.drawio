@@ -1,0 +1,94 @@
+<mxfile host="65bd71144e">
+    <diagram id="componentes" name="Diagrama de Componentes">
+        <mxGraphModel dx="898" dy="804" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="pres" value="Capa Presentación" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="40" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="c01" value="C-01&#10;API / Controlador" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="65" width="160" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="app" value="Capa Aplicación" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="170" width="680" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="c02" value="C-02&#10;Servicio de Transferencias" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="200" width="180" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="c03" value="C-03&#10;Servicio de Cuentas" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="200" width="170" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="c04" value="C-04&#10;Servicio de Consulta" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="200" width="180" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom" value="Capa Dominio" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="310" width="430" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="c05" value="C-05&#10;Motor de Reglas / Validaciones" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="190" y="340" width="190" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="c06" value="C-06&#10;Procesador de Transacción Atómica" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="340" width="170" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="infra" value="Capa Infraestructura" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="450" width="430" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="c07" value="C-07&#10;Repositorio de Cuentas" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="480" width="170" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="c08" value="C-08&#10;Repositorio de Historial" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="480" width="170" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="acl" value="Capa Anticorrupción" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="310" width="300" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="c09" value="C-09&#10;Adaptador On-Premise" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="690" y="350" width="210" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="onprem" value="Sistemas on-premise" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontColor=#050505;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="490" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c01" target="c02" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c01" target="c03" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c01" target="c04" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d4" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c02" target="c05" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d5" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c02" target="c06" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d6" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c02" target="c08" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d7" style="endArrow=classic;html=1;dashed=1;strokeColor=#b85450;fontColor=#050505;" parent="1" source="c02" target="c09" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d8" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c03" target="c07" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d9" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c04" target="c08" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d10" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c05" target="c07" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d11" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c05" target="c08" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d12" style="endArrow=classic;html=1;fontColor=#050505;" parent="1" source="c06" target="c07" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="d13" value="VPN · API/SOAP" style="endArrow=classic;startArrow=classic;html=1;dashed=1;strokeColor=#b85450;fontSize=10;fontColor=#050505;" parent="1" source="c09" target="onprem" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

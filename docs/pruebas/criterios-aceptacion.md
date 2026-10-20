@@ -1,103 +1,151 @@
 # Criterios de Aceptación
 
-> **Responsable:** Luis  
-> **Tarea:** T-14  
-> **Estado:** ⬜ Pendiente  
+> **Responsable:** Luis
+> **Tarea:** T-14
+> **Estado:** ✅ Completado
 > **Depende de:** T-13 (Casos de prueba)
 
 ---
 
-## Instrucciones
+## 1. Propósito
 
-Los criterios deben ser **verificables** (no subjetivos). Formato sugerido: **Dado / Cuando / Entonces** (Gherkin).  
-Cada criterio debe estar ligado a un requerimiento funcional y a un caso de prueba.
+Definir criterios **verificables** (no subjetivos) en formato **Dado / Cuando / Entonces** (Gherkin). Cada criterio se liga a un requerimiento funcional (RF) y a un caso de prueba (CP), de modo que su cumplimiento pueda comprobarse objetivamente.
 
 ---
 
 ## CA-01 · Transferencia exitosa
-**RF:** RF-02.1, RF-02.2  
-**Caso de prueba:** CP-01
+**RF:** RF-03, RF-06, RF-07 · **CP:** CP-01
 
 ```gherkin
-Dado que la cuenta C-001 tiene saldo de Q1,000.00
-  Y la cuenta C-002 existe en el sistema
-Cuando el usuario solicita transferir Q500.00 de C-001 a C-002
-Entonces el saldo de C-001 debe ser Q500.00
-  Y el saldo de C-002 debe aumentar en Q500.00
-  Y debe existir un registro de transacción con estado "EXITOSA"
-  Y el usuario debe recibir confirmación con número de comprobante
+Dado que la cuenta CTA-10001 tiene saldo de Q1,000.00
+  Y la cuenta CTA-10025 existe y está habilitada
+Cuando el usuario solicita transferir Q500.00 de CTA-10001 a CTA-10025
+Entonces el saldo de CTA-10001 debe quedar en Q500.00
+  Y el saldo de CTA-10025 debe aumentar en Q500.00
+  Y debe registrarse una transacción con estado "EXITOSA"
+  Y el usuario debe recibir un comprobante con referencia única
 ```
 
 ---
 
 ## CA-02 · Rechazo por fondos insuficientes
-**RF:** RF-03.2  
-**Caso de prueba:** CP-02
+**RF:** RF-04 · **CP:** CP-02
 
 ```gherkin
-Dado que la cuenta C-001 tiene saldo de Q100.00
-Cuando el usuario solicita transferir Q500.00 desde C-001
+Dado que la cuenta CTA-10001 tiene saldo de Q100.00
+Cuando el usuario solicita transferir Q500.00 desde CTA-10001
 Entonces la transferencia debe ser rechazada
-  Y el saldo de C-001 no debe modificarse
-  Y debe existir un registro de transacción con estado "RECHAZADA"
-  Y el mensaje de error debe indicar "Fondos insuficientes"
+  Y el saldo de CTA-10001 no debe modificarse
+  Y debe registrarse una transacción con estado "RECHAZADA"
+  Y el mensaje debe indicar "Fondos insuficientes"
 ```
 
 ---
 
 ## CA-03 · Rechazo por cuenta inexistente
-**RF:** RF-03.1  
-**Caso de prueba:** CP-03
+**RF:** RF-04 · **CP:** CP-03
 
 ```gherkin
-Dado que la cuenta C-999 no existe en el sistema
-Cuando el usuario intenta transferir a C-999
-Entonces la transferencia debe ser rechazada antes de cualquier modificación
-  Y el sistema debe responder con el mensaje "Cuenta destino no encontrada"
+Dado que la cuenta CTA-99999 no existe en el sistema
+Cuando el usuario intenta transferir a CTA-99999
+Entonces la transferencia debe rechazarse antes de modificar cualquier saldo
+  Y el sistema debe responder "Cuenta destino no encontrada"
   Y ningún saldo debe modificarse
 ```
 
 ---
 
 ## CA-04 · Prevención de duplicados
-**RF:** RF-03.3  
-**Caso de prueba:** CP-04
+**RF:** RF-05 · **CP:** CP-04
 
 ```gherkin
-Dado que se ejecutó una transferencia de C-001 a C-002 por Q200.00 hace 30 segundos
-Cuando el usuario intenta realizar la misma transferencia nuevamente
-Entonces el sistema debe rechazar la operación
+Dado que se ejecutó una transferencia con la referencia REF-000457
+Cuando se recibe nuevamente una solicitud con la misma referencia REF-000457
+Entonces el sistema no debe ejecutar una segunda transferencia
+  Y debe devolver el resultado original de la operación
   Y el mensaje debe indicar "Operación duplicada detectada"
   Y los saldos no deben modificarse
 ```
 
 ---
 
-## CA-05 · Registro de historial
-**RF:** RF-04.1  
-**Caso de prueba:** CP-07
+## CA-05 · Rechazo por monto inválido
+**RF:** RF-04 · **CP:** CP-05
 
 ```gherkin
-Dado que la cuenta C-001 ha realizado 3 transferencias
-Cuando el usuario consulta el historial de C-001
-Entonces el sistema debe mostrar las 3 transacciones
-  Y cada transacción debe incluir: fecha, monto, cuenta destino y estado
+Dado que las cuentas CTA-10001 y CTA-10025 existen y están habilitadas
+Cuando el usuario solicita transferir un monto de Q0.00 o negativo
+Entonces la transferencia debe rechazarse antes de procesar
+  Y el mensaje debe indicar "Monto inválido"
+  Y ningún saldo debe modificarse
 ```
 
 ---
 
-## CA-06 · Creación de cuenta
-**RF:** RF-01.1, RF-01.2  
-**Caso de prueba:** CP-05
+## CA-06 · Creación de cuenta con identificador único
+**RF:** RF-01 · **CP:** CP-06
 
 ```gherkin
-Dado que el usuario proporciona datos válidos para una nueva cuenta
+Dado que el administrador proporciona datos válidos para una nueva cuenta
+  Y no existe otra cuenta con el mismo identificador
 Cuando se solicita crear la cuenta
-Entonces el sistema debe asignar un ID único
-  Y la cuenta debe quedar activa y con saldo inicial de Q0.00
-  Y el sistema debe confirmar la creación exitosa
+Entonces el sistema debe registrar la cuenta con un identificador único
+  Y la cuenta debe quedar activa con saldo inicial de Q0.00
+  Y el sistema debe confirmar la creación
 ```
 
 ---
 
-_Completa los criterios faltantes y cambia el estado a ✅._
+## CA-07 · Rechazo de identificador duplicado
+**RF:** RF-01 · **CP:** CP-07
+
+```gherkin
+Dado que ya existe la cuenta CTA-10025
+Cuando se intenta crear otra cuenta con el identificador CTA-10025
+Entonces la operación debe ser rechazada
+  Y la cuenta original debe permanecer sin cambios
+  Y el sistema debe indicar que el identificador ya existe
+```
+
+---
+
+## CA-08 · Consulta de historial
+**RF:** RF-08 · **CP:** CP-08
+
+```gherkin
+Dado que la cuenta CTA-10001 tiene 3 transacciones registradas
+  Y el usuario tiene permisos de consulta
+Cuando el usuario consulta el historial de CTA-10001
+Entonces el sistema debe mostrar las 3 transacciones
+  Y cada transacción debe incluir fecha, monto, cuenta destino y estado
+  Y debe distinguir las operaciones EXITOSA de las RECHAZADA
+```
+
+---
+
+## CA-09 · Consulta sin resultados
+**RF:** RF-08 · **CP:** CP-09
+
+```gherkin
+Dado que la cuenta CTA-10044 no tiene transacciones en el período consultado
+Cuando el usuario consulta su historial para ese período
+Entonces el sistema debe mostrar un resultado vacío
+  Y debe informar "Sin operaciones"
+  Y no debe producirse ningún error
+```
+
+---
+
+## Resumen de criterios
+
+| Criterio | RF | Caso de prueba |
+|----------|-----|----------------|
+| CA-01 Transferencia exitosa | RF-03, RF-06, RF-07 | CP-01 |
+| CA-02 Fondos insuficientes | RF-04 | CP-02 |
+| CA-03 Cuenta inexistente | RF-04 | CP-03 |
+| CA-04 Prevención de duplicados | RF-05 | CP-04 |
+| CA-05 Monto inválido | RF-04 | CP-05 |
+| CA-06 Creación de cuenta | RF-01 | CP-06 |
+| CA-07 Identificador duplicado | RF-01 | CP-07 |
+| CA-08 Consulta de historial | RF-08 | CP-08 |
+| CA-09 Consulta sin resultados | RF-08 | CP-09 |

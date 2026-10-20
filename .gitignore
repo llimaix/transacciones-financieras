@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Temporales de conversión/exportación
+_*.html
+*.tmp

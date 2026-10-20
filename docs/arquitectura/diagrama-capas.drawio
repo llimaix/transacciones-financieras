@@ -1,0 +1,76 @@
+<mxfile host="65bd71144e">
+    <diagram id="capas" name="Arquitectura en Capas">
+        <mxGraphModel dx="1076" dy="965" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="cliente" value="Cliente / Operador autenticado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="40" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pres" value="Capa de Presentación / API" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=13;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="130" width="500" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="api" value="API REST + Autenticación y autorización por rol" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=12;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="165" width="420" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="app" value="Capa de Aplicación (orquestación)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="260" width="500" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="svcT" value="Servicio de&#10;Transferencias" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="300" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="svcC" value="Servicio de&#10;Cuentas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="385" y="300" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="svcQ" value="Servicio de&#10;Consulta" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="300" width="130" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom" value="Capa de Dominio (reglas de negocio + atomicidad)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=13;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="410" width="500" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="reglas" value="Validaciones + Débito/Crédito atómico + Invariantes financieros" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=12;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="445" width="420" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="infra" value="Capa de Infraestructura / Persistencia" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="540" width="500" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="db" value="Base de datos transaccional ACID&#10;Cuentas · Saldos · Historial" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="575" width="220" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="integ" value="Capa Anticorrupción (integración on-premise)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="680" width="500" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="adapt" value="Adaptador de integración API / SOAP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="715" width="380" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="onprem" value="Sistemas on-premise de la institución" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontColor=#0d0c0c;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="840" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="f0" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#0d0c0c;" parent="1" source="cliente" target="api" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#0d0c0c;" parent="1" source="api" target="app" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f2" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#0d0c0c;" parent="1" source="svcT" target="reglas" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f3" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#0d0c0c;" parent="1" source="svcC" target="reglas" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f4" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#0d0c0c;" parent="1" source="reglas" target="db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f5" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#0d0c0c;" parent="1" source="svcQ" target="db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f6" style="endArrow=classic;html=1;strokeColor=#b85450;dashed=1;fontColor=#0d0c0c;" parent="1" source="svcT" target="adapt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f7" value="VPN sitio a sitio" style="endArrow=classic;startArrow=classic;html=1;strokeColor=#b85450;dashed=1;fontSize=10;fontColor=#0d0c0c;" parent="1" source="adapt" target="onprem" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

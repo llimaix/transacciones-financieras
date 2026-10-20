@@ -1,77 +1,113 @@
 # Diagramas de Secuencia
 
-> **Responsable:** Wuilli  
-> **Tarea:** T-09  
-> **Estado:** ⬜ Pendiente  
-> **Depende de:** T-03 (Casos de uso — Astrid)
+> **Responsable:** Wuilli
+> **Tarea:** T-09
+> **Estado:** ✅ Completado
+> **Depende de:** T-03 (Casos de uso)
 
 ---
 
-## Instrucciones
+## 1. Propósito
 
-Crear un diagrama de secuencia por flujo. Cada diagrama debe mostrar la interacción temporal entre actores y componentes del sistema. Exportar cada diagrama como imagen en esta carpeta.
-
----
-
-## Diagrama 1 — Transferencia exitosa
-
-> Insertar imagen: `secuencia-transferencia-exitosa.png`
-
-**Participantes:** Cliente, TransferenciaService, ValidadorFondos, Cuenta (origen), Cuenta (destino), HistorialRepository
-
-**Secuencia resumida:**
-```
-Cliente → TransferenciaService : ejecutarTransferencia(origen, destino, monto)
-TransferenciaService → ValidadorFondos : validarExistencia(origen)
-ValidadorFondos → TransferenciaService : true
-TransferenciaService → ValidadorFondos : validarExistencia(destino)
-ValidadorFondos → TransferenciaService : true
-TransferenciaService → ValidadorFondos : validarFondos(origen, monto)
-ValidadorFondos → TransferenciaService : true
-TransferenciaService → ValidadorFondos : esDuplicada(transaccion)
-ValidadorFondos → TransferenciaService : false
-TransferenciaService → Cuenta(origen) : debitar(monto)
-TransferenciaService → Cuenta(destino) : acreditar(monto)
-TransferenciaService → HistorialRepository : guardar(transaccion EXITOSA)
-TransferenciaService → Cliente : transaccion exitosa
-```
+Mostrar la interacción temporal entre el actor y los componentes/clases del sistema para los flujos principales de la transferencia. Los participantes corresponden a las clases del diagrama de clases y a los componentes C-01..C-09.
 
 ---
 
-## Diagrama 2 — Transferencia fallida (fondos insuficientes)
+## 2. Diagrama 1 — Transferencia exitosa
 
-> Insertar imagen: `secuencia-fondos-insuficientes.png`
+```mermaid
+sequenceDiagram
+    actor Operador
+    participant API as C-01 API
+    participant TS as C-02 TransferenciaService
+    participant V as C-05 ValidadorFondos
+    participant P as C-06 ProcesadorTransaccion
+    participant CR as C-07 CuentaRepository
+    participant HR as C-08 HistorialRepository
 
-**Secuencia resumida:**
-```
-Cliente → TransferenciaService : ejecutarTransferencia(origen, destino, monto)
-TransferenciaService → ValidadorFondos : validarExistencia(origen)
-ValidadorFondos → TransferenciaService : true
-TransferenciaService → ValidadorFondos : validarFondos(origen, monto)
-ValidadorFondos → TransferenciaService : false  ← fondos insuficientes
-TransferenciaService → HistorialRepository : guardar(transaccion RECHAZADA)
-TransferenciaService → Cliente : error - fondos insuficientes
+    Operador->>API: transferir(origen, destino, monto, ref)
+    API->>TS: ejecutarTransferencia(solicitud)
+    TS->>V: validarExistencia(origen, destino)
+    V->>CR: obtener(origen), obtener(destino)
+    CR-->>V: cuentas
+    V-->>TS: válidas
+    TS->>V: validarFondos(origen, monto)
+    V-->>TS: fondos suficientes
+    TS->>V: esDuplicada(ref)
+    V->>HR: existeReferencia(ref)
+    HR-->>V: no existe
+    V-->>TS: no es duplicada
+    TS->>P: procesar(origen, destino, monto)
+    Note over P,CR: Transacción ACID (débito + crédito)
+    P->>CR: debitar(origen, monto)
+    P->>CR: acreditar(destino, monto)
+    CR-->>P: saldos actualizados
+    P-->>TS: Transaccion EXITOSA
+    TS->>HR: guardar(Transaccion EXITOSA)
+    TS-->>API: resultado exitoso
+    API-->>Operador: comprobante
 ```
 
 ---
 
-## Diagrama 3 — Transferencia duplicada detectada
+## 3. Diagrama 2 — Transferencia rechazada (fondos insuficientes)
 
-> Insertar imagen: `secuencia-duplicada.png`
+```mermaid
+sequenceDiagram
+    actor Operador
+    participant API as C-01 API
+    participant TS as C-02 TransferenciaService
+    participant V as C-05 ValidadorFondos
+    participant CR as C-07 CuentaRepository
+    participant HR as C-08 HistorialRepository
 
-**Secuencia resumida:**
-```
-Cliente → TransferenciaService : ejecutarTransferencia(origen, destino, monto)
-TransferenciaService → ValidadorFondos : validarExistencia(origen)
-ValidadorFondos → TransferenciaService : true
-TransferenciaService → ValidadorFondos : validarFondos(origen, monto)
-ValidadorFondos → TransferenciaService : true
-TransferenciaService → ValidadorFondos : esDuplicada(transaccion)
-ValidadorFondos → TransferenciaService : true  ← duplicada detectada
-TransferenciaService → HistorialRepository : guardar(transaccion RECHAZADA - duplicada)
-TransferenciaService → Cliente : error - operación duplicada
+    Operador->>API: transferir(origen, destino, monto, ref)
+    API->>TS: ejecutarTransferencia(solicitud)
+    TS->>V: validarExistencia(origen, destino)
+    V->>CR: obtener(origen), obtener(destino)
+    CR-->>V: cuentas
+    V-->>TS: válidas
+    TS->>V: validarFondos(origen, monto)
+    V->>CR: obtener(origen).getSaldo()
+    CR-->>V: saldo < monto
+    V-->>TS: fondos insuficientes
+    Note over TS: No se modifica ningún saldo
+    TS->>HR: guardar(Transaccion RECHAZADA - "Fondos insuficientes")
+    TS-->>API: error: fondos insuficientes
+    API-->>Operador: motivo del rechazo
 ```
 
 ---
 
-_Genera los diagramas visuales, agrega las imágenes y cambia el estado a ✅._
+## 4. Diagrama 3 — Transferencia duplicada detectada
+
+```mermaid
+sequenceDiagram
+    actor Operador
+    participant API as C-01 API
+    participant TS as C-02 TransferenciaService
+    participant V as C-05 ValidadorFondos
+    participant HR as C-08 HistorialRepository
+
+    Operador->>API: transferir(origen, destino, monto, ref)
+    API->>TS: ejecutarTransferencia(solicitud)
+    TS->>V: esDuplicada(ref)
+    V->>HR: existeReferencia(ref)
+    HR-->>V: ya existe
+    V-->>TS: es duplicada
+    Note over TS: Idempotencia (RB-05): no se ejecuta de nuevo
+    TS->>HR: buscar(ref)
+    HR-->>TS: resultado original
+    TS-->>API: devuelve resultado original (sin re-ejecutar)
+    API-->>Operador: "Operación duplicada detectada"
+```
+
+> **Versión editable (draw.io):** `diagramas-secuencia.drawio` (contiene los tres diagramas en páginas separadas).
+
+---
+
+## 5. Observaciones
+
+- En el flujo exitoso, el débito y el crédito ocurren **dentro de una transacción ACID** gestionada por `ProcesadorTransaccion` (C-06); si cualquiera falla, se revierte todo (RNF-01, RB-07).
+- En los flujos de rechazo, **ningún saldo se modifica**: el sistema valida antes de procesar.
+- La detección de duplicados aplica **idempotencia por referencia única** (RB-05): una solicitud repetida devuelve el resultado original sin generar un segundo movimiento.

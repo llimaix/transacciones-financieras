@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototipo · Sistema de Transferencias Financieras</title>
+<style>
+  :root {
+    --brand:#0a5c5c; --brand-dark:#073f3f; --brand-light:#e6f2f2;
+    --accent:#1b9e77; --danger:#c0392b; --danger-bg:#fdecea;
+    --ink:#1a2b2b; --muted:#6b7f7f; --line:#dce7e7; --bg:#f4f7f7;
+    --radius:14px; --shadow:0 8px 28px rgba(10,40,40,.10);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5; padding:32px 16px;
+  }
+  .page-title { text-align:center; margin-bottom:6px; font-size:22px; color:var(--brand-dark); }
+  .page-sub { text-align:center; color:var(--muted); margin-bottom:28px; font-size:13px; }
+  .grid { display:flex; flex-wrap:wrap; gap:28px; justify-content:center; align-items:flex-start; }
+
+  .device {
+    width:340px; background:#fff; border-radius:26px; box-shadow:var(--shadow);
+    overflow:hidden; border:1px solid var(--line);
+  }
+  .device .notch { height:26px; background:var(--brand-dark); }
+  .screen { padding:0 0 18px; min-height:560px; display:flex; flex-direction:column; }
+  .wf-label {
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
+    text-align:center; padding:10px 0 4px; border-bottom:1px dashed var(--line); margin-bottom:0;
+  }
+
+  .topbar { background:var(--brand); color:#fff; padding:16px 20px; }
+  .topbar .bank { font-size:13px; opacity:.85; }
+  .topbar .hello { font-size:17px; font-weight:600; margin-top:2px; }
+
+  .body { padding:18px 20px; flex:1; }
+  .center { display:flex; flex-direction:column; justify-content:center; align-items:center; flex:1; padding:28px 24px; text-align:center; }
+
+  .logo { width:54px; height:54px; border-radius:50%; background:var(--brand); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:14px; }
+  h2.title { font-size:18px; color:var(--brand-dark); margin-bottom:4px; }
+  .sub { font-size:12px; color:var(--muted); margin-bottom:22px; }
+
+  label { display:block; font-size:12px; color:var(--muted); margin:14px 0 5px; font-weight:500; }
+  input, select, .field {
+    width:100%; padding:11px 13px; border:1px solid var(--line); border-radius:10px;
+    font-size:14px; background:#fbfdfd; color:var(--ink);
+  }
+  input:focus, select:focus { outline:2px solid var(--brand-light); border-color:var(--brand); }
+  .hint { font-size:10.5px; color:var(--muted); margin-top:5px; }
+
+  .btn { width:100%; padding:12px; border:none; border-radius:10px; font-size:14px; font-weight:600;
+    cursor:pointer; margin-top:16px; }
+  .btn.primary { background:var(--brand); color:#fff; }
+  .btn.ghost { background:#fff; color:var(--brand); border:1px solid var(--brand); }
+  .btn.subtle { background:#eef4f4; color:var(--muted); }
+  .btn-row { display:flex; gap:10px; }
+  .btn-row .btn { margin-top:16px; }
+
+  .link { font-size:12px; color:var(--brand); text-align:center; margin-top:16px; }
+
+  .balance-card { background:linear-gradient(135deg,var(--brand),var(--brand-dark)); color:#fff;
+    border-radius:var(--radius); padding:18px; margin-bottom:16px; }
+  .balance-card .lbl { font-size:11px; opacity:.8; }
+  .balance-card .amt { font-size:26px; font-weight:700; margin-top:3px; }
+  .balance-card .acc { font-size:11px; opacity:.75; margin-top:6px; }
+
+  .quick { display:flex; gap:10px; margin-bottom:18px; }
+  .quick .q { flex:1; border:1px solid var(--line); border-radius:12px; padding:14px 8px; text-align:center;
+    font-size:12px; font-weight:600; color:var(--brand-dark); background:#fff; }
+  .quick .q .ic { font-size:20px; display:block; margin-bottom:6px; }
+
+  .section-h { font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.06em; margin:4px 0 8px; }
+
+  .tx { display:flex; justify-content:space-between; align-items:center; padding:11px 2px; border-bottom:1px solid var(--line); }
+  .tx:last-child { border-bottom:none; }
+  .tx .meta { font-size:13px; }
+  .tx .meta .d { color:var(--muted); font-size:11px; }
+  .tx .amt { font-weight:600; font-size:13px; }
+  .pill { font-size:10px; padding:2px 8px; border-radius:20px; font-weight:600; }
+  .pill.ok { background:#e5f4ee; color:var(--accent); }
+  .pill.no { background:var(--danger-bg); color:var(--danger); }
+
+  .result-ic { width:64px; height:64px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:32px; color:#fff; margin-bottom:14px; }
+  .result-ic.ok { background:var(--accent); }
+  .result-ic.no { background:var(--danger); }
+  .summary { background:#f7fafa; border:1px solid var(--line); border-radius:12px; padding:14px; width:100%;
+    text-align:left; font-size:13px; margin-bottom:6px; }
+  .summary .row { display:flex; justify-content:space-between; padding:5px 0; }
+  .summary .row span:first-child { color:var(--muted); }
+  .summary .row.total { border-top:1px solid var(--line); margin-top:6px; padding-top:9px; font-weight:700; }
+  .alert { background:var(--danger-bg); color:var(--danger); border-radius:10px; padding:12px; font-size:13px;
+    width:100%; text-align:left; margin-bottom:12px; font-weight:600; }
+  .alert small { display:block; font-weight:400; color:#8a3b32; margin-top:4px; }
+
+  .filters { display:flex; gap:8px; margin-bottom:14px; }
+  .filters select { font-size:12px; padding:8px 10px; }
+  .pager { text-align:center; font-size:12px; color:var(--muted); margin-top:14px; }
+  .pager b { color:var(--brand); }
+
+  .detail { width:100%; }
+  .detail .row { display:flex; justify-content:space-between; padding:10px 2px; border-bottom:1px solid var(--line); font-size:13px; }
+  .detail .row span:first-child { color:var(--muted); }
+  .caption { max-width:760px; margin:10px auto 0; text-align:center; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+
+  <h1 class="page-title">Prototipo de interfaz · Sistema de Transferencias Financieras</h1>
+  <p class="page-sub">Wireframes de media/alta fidelidad · WF-01 a WF-08 · prototipo no funcional para validación de UX</p>
+
+  <div class="grid">
+
+    <!-- WF-01 Login -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-01 · Inicio de sesión</div>
+        <div class="center">
+          <div class="logo">₲</div>
+          <h2 class="title">Transferencias Financieras</h2>
+          <p class="sub">Acceso seguro a su banca</p>
+          <div style="width:100%;text-align:left;">
+            <label>Usuario</label>
+            <input type="text" placeholder="usuario@institucion.com">
+            <label>Contraseña</label>
+            <input type="password" placeholder="••••••••">
+          </div>
+          <button class="btn primary">Ingresar</button>
+          <p class="link">¿Olvidaste tu contraseña?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-02 Panel -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-02 · Panel principal</div>
+        <div class="topbar">
+          <div class="bank">Transferencias Financieras</div>
+          <div class="hello">Hola, Operador</div>
+        </div>
+        <div class="body">
+          <div class="balance-card">
+            <div class="lbl">Saldo disponible</div>
+            <div class="amt">Q 12,500.00</div>
+            <div class="acc">Cuenta CTA-10001</div>
+          </div>
+          <div class="quick">
+            <div class="q"><span class="ic">↗</span>Nueva transferencia</div>
+            <div class="q"><span class="ic">🕑</span>Ver historial</div>
+          </div>
+          <div class="section-h">Últimas transacciones</div>
+          <div class="tx"><div class="meta">CTA-10025<div class="d">14/10/2026</div></div><div style="text-align:right"><div class="amt">− Q 300.00</div><span class="pill ok">EXITOSA</span></div></div>
+          <div class="tx"><div class="meta">CTA-10030<div class="d">13/10/2026</div></div><div style="text-align:right"><div class="amt">− Q 500.00</div><span class="pill ok">EXITOSA</span></div></div>
+          <div class="tx"><div class="meta">CTA-10011<div class="d">12/10/2026</div></div><div style="text-align:right"><div class="amt">− Q 750.00</div><span class="pill no">RECHAZADA</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-03 Formulario -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-03 · Nueva transferencia</div>
+        <div class="topbar"><div class="hello">Nueva transferencia</div></div>
+        <div class="body">
+          <label>Cuenta origen</label>
+          <select><option>CTA-10001 — Q 12,500.00</option></select>
+          <label>Cuenta destino</label>
+          <input type="text" placeholder="Ej. CTA-10025">
+          <label>Monto</label>
+          <input type="text" placeholder="Q 0.00">
+          <label>Descripción (opcional)</label>
+          <input type="text" placeholder="Ej. Pago de servicios">
+          <p class="hint">La referencia única de la operación se genera automáticamente.</p>
+          <div class="btn-row">
+            <button class="btn subtle">Cancelar</button>
+            <button class="btn primary">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-04 Confirmación -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-04 · Confirmación</div>
+        <div class="topbar"><div class="hello">Confirmar transferencia</div></div>
+        <div class="body">
+          <p class="sub" style="margin-bottom:14px">Revisa los datos antes de confirmar</p>
+          <div class="summary">
+            <div class="row"><span>Origen</span><b>CTA-10001</b></div>
+            <div class="row"><span>Destino</span><b>CTA-10025</b></div>
+            <div class="row"><span>Descripción</span><b>Pago de servicios</b></div>
+            <div class="row total"><span>Monto</span><b>Q 300.00</b></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn ghost">Editar</button>
+            <button class="btn primary">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-05 Éxito -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-05 · Resultado exitoso</div>
+        <div class="center">
+          <div class="result-ic ok">✓</div>
+          <h2 class="title">Transferencia exitosa</h2>
+          <p class="sub">Comprobante TRX-000457</p>
+          <div class="summary">
+            <div class="row"><span>Origen</span><b>CTA-10001</b></div>
+            <div class="row"><span>Destino</span><b>CTA-10025</b></div>
+            <div class="row"><span>Fecha</span><b>14/10/2026 10:32</b></div>
+            <div class="row"><span>Estado</span><b style="color:var(--accent)">EXITOSA</b></div>
+            <div class="row total"><span>Monto</span><b>Q 300.00</b></div>
+          </div>
+          <button class="btn primary">Nueva transferencia</button>
+          <button class="btn subtle">Ir al inicio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-06 Error -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-06 · Resultado con error</div>
+        <div class="center">
+          <div class="result-ic no">✕</div>
+          <h2 class="title">Transferencia rechazada</h2>
+          <p class="sub">No se modificó ningún saldo</p>
+          <div class="alert">Fondos insuficientes
+            <small>El saldo de CTA-10001 (Q 100.00) es menor al monto solicitado (Q 500.00).</small>
+          </div>
+          <button class="btn primary">Intentar de nuevo</button>
+          <button class="btn subtle">Ir al inicio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-07 Historial -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-07 · Historial</div>
+        <div class="topbar"><div class="hello">Historial de transacciones</div></div>
+        <div class="body">
+          <div class="filters">
+            <select><option>Cuenta</option></select>
+            <select><option>Fecha</option></select>
+            <select><option>Estado</option></select>
+          </div>
+          <div class="tx"><div class="meta">CTA-10025<div class="d">14/10/2026</div></div><div style="text-align:right"><div class="amt">Q 300.00</div><span class="pill ok">EXITOSA</span></div></div>
+          <div class="tx"><div class="meta">CTA-10030<div class="d">13/10/2026</div></div><div style="text-align:right"><div class="amt">Q 500.00</div><span class="pill ok">EXITOSA</span></div></div>
+          <div class="tx"><div class="meta">CTA-10011<div class="d">12/10/2026</div></div><div style="text-align:right"><div class="amt">Q 750.00</div><span class="pill no">RECHAZADA</span></div></div>
+          <div class="tx"><div class="meta">CTA-10044<div class="d">11/10/2026</div></div><div style="text-align:right"><div class="amt">Q 120.00</div><span class="pill ok">EXITOSA</span></div></div>
+          <div class="pager">◀ &nbsp; <b>1</b> &nbsp; 2 &nbsp; 3 &nbsp; ▶</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WF-08 Detalle -->
+    <div class="device">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="wf-label">WF-08 · Detalle de transacción</div>
+        <div class="topbar"><div class="hello">Detalle de transacción</div></div>
+        <div class="body">
+          <div class="detail">
+            <div class="row"><span>Referencia</span><b>TRX-000457</b></div>
+            <div class="row"><span>Origen</span><b>CTA-10001</b></div>
+            <div class="row"><span>Destino</span><b>CTA-10025</b></div>
+            <div class="row"><span>Monto</span><b>Q 300.00</b></div>
+            <div class="row"><span>Fecha</span><b>14/10/2026 10:32</b></div>
+            <div class="row"><span>Estado</span><b style="color:var(--accent)">EXITOSA</b></div>
+            <div class="row"><span>Motivo rechazo</span><b>—</b></div>
+          </div>
+          <button class="btn ghost" style="margin-top:20px">Volver al historial</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="caption">Prototipo visual para validación de UX. Las pantallas corresponden a los flujos definidos (CU-01 a CU-04). La referencia única (WF-03) es generada por el sistema para garantizar la idempotencia de las operaciones.</p>
+
+</body>
+</html>

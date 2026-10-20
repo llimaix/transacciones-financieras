@@ -1,0 +1,58 @@
+<mxfile host="65bd71144e">
+    <diagram id="onpremise" name="Despliegue On-Premise">
+        <mxGraphModel dx="1076" dy="965" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="950" pageHeight="800" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="cliente" value="Cliente / Operador" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="330" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dc" value="Centro de datos de la institución (on-premise)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=14;fillColor=none;strokeColor=#333333;dashed=1;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="60" width="620" height="660" as="geometry"/>
+                </mxCell>
+                <mxCell id="lb" value="Balanceador&#10;NGINX / HAProxy / F5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="320" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="k8s" value="Clúster de contenedores (Kubernetes / OpenShift)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="130" width="300" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="apppod" value="Aplicación + Dominio&#10;(mismos contenedores)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="175" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="ad" value="Active Directory / LDAP&#10;+ OIDC (Keycloak)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="140" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbp" value="PostgreSQL primario" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="330" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbr" value="PostgreSQL réplica" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="450" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="legacy" value="Sistemas legacy&#10;(misma LAN)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="450" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="obs" value="Observabilidad:&#10;Prometheus + Grafana + ELK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="580" width="300" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="g0" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#000000;" parent="1" source="cliente" target="lb" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="g1" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#000000;" parent="1" source="lb" target="apppod" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="g2" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#000000;" parent="1" source="apppod" target="ad" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="g3" style="endArrow=classic;html=1;strokeColor=#333333;fontColor=#000000;" parent="1" source="apppod" target="dbp" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="g4" value="replicación" style="endArrow=classic;html=1;strokeColor=#9673a6;dashed=1;fontSize=10;fontColor=#000000;" parent="1" source="dbp" target="dbr" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="g5" value="LAN directa" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;fontColor=#000000;" parent="1" source="apppod" target="legacy" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -31,7 +31,7 @@
 
 ### T-01 · Completar requerimientos funcionales
 **Archivo:** `docs/requerimientos/requerimientos-funcionales.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** —  
 **Notas:**  
 El PDF entrega una lista base que NO es exhaustiva. Astrid debe analizar el problema y expandirlos cubriendo al menos:
@@ -44,7 +44,7 @@ El PDF entrega una lista base que NO es exhaustiva. Astrid debe analizar el prob
 
 ### T-02 · Documentar requerimientos no funcionales
 **Archivo:** `docs/requerimientos/requerimientos-no-funcionales.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-01  
 **Notas:**  
 Desarrollar en detalle los 4 RF no funcionales del PDF:
@@ -57,7 +57,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-03 · Elaborar casos de uso
 **Archivo:** `docs/diagramas/casos-de-uso/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-01  
 **Notas:**  
 - Diagrama de casos de uso general (actores + sistema)
@@ -71,7 +71,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-04 · Decisión arquitectónica
 **Archivo:** `docs/arquitectura/decision-arquitectonica.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-01  
 **Notas:**  
 - Seleccionar y justificar el estilo arquitectónico elegido (ej. Capas, Hexagonal, Microservicios, Event-Driven)
@@ -82,7 +82,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-05 · Documentar alternativas descartadas
 **Archivo:** `docs/arquitectura/alternativas-descartadas.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** —  
 **Notas:**  
 - Describir al menos 2 estilos arquitectónicos alternativos
@@ -93,7 +93,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-06 · Diseño de componentes
 **Archivo:** `docs/arquitectura/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-04  
 **Notas:**  
 - Dividir el sistema en módulos con responsabilidades claras
@@ -108,7 +108,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-07 · Diagrama de componentes
 **Archivo:** `docs/diagramas/componentes/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-06 (Diseño de componentes — Fabiola)  
 **Notas:**  
 - Representar visualmente los módulos definidos por Fabiola
@@ -119,7 +119,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-08 · Diagrama de clases
 **Archivo:** `docs/diagramas/clases/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-06 (Diseño de componentes — Fabiola)  
 **Notas:**  
 - Clases mínimas esperadas: `Cuenta`, `Transaccion`, `TransferenciaService`, `ValidadorFondos`, `HistorialRepository`
@@ -129,7 +129,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-09 · Diagramas de secuencia
 **Archivo:** `docs/diagramas/secuencia/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-03 (Casos de uso — Astrid)  
 **Notas:**  
 - Un diagrama por flujo principal, mínimo:
@@ -145,7 +145,7 @@ Desarrollar en detalle los 4 RF no funcionales del PDF:
 
 ### T-10 · Documentar supuestos
 **Archivo:** `docs/requerimientos/supuestos.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** —  
 **Notas:**  
 El PDF exige documentar supuestos obligatoriamente. Mínimo:
@@ -159,7 +159,7 @@ El PDF exige documentar supuestos obligatoriamente. Mínimo:
 
 ### T-11 · Diseño de flujos UX
 **Archivo:** `docs/ux/flujos/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-03 (Casos de uso — Astrid)  
 **Notas:**  
 El PDF pide diseñar explícitamente el flujo de:
@@ -171,7 +171,7 @@ El PDF pide diseñar explícitamente el flujo de:
 
 ### T-12 · Wireframes funcionales
 **Archivo:** `docs/ux/wireframes/`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-11  
 **Notas:**  
 - Wireframes de baja/media fidelidad para cada flujo
@@ -185,7 +185,7 @@ El PDF pide diseñar explícitamente el flujo de:
 
 ### T-13 · Definir casos de prueba
 **Archivo:** `docs/pruebas/casos-de-prueba.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-03 (Casos de uso — Astrid)  
 **Notas:**  
 Por cada caso de uso se necesitan al menos 3 escenarios:
@@ -197,7 +197,7 @@ Por cada caso de uso se necesitan al menos 3 escenarios:
 
 ### T-14 · Definir criterios de aceptación
 **Archivo:** `docs/pruebas/criterios-aceptacion.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-13  
 **Notas:**  
 - Criterios verificables (no subjetivos)
@@ -208,7 +208,7 @@ Por cada caso de uso se necesitan al menos 3 escenarios:
 
 ### T-15 · Construir matriz de trazabilidad
 **Archivo:** `trazabilidad/matriz-trazabilidad.md`  
-**Estado:** ⬜ Pendiente  
+**Estado:** ✅ Completado  
 **Depende de:** T-01, T-03, T-06, T-08, T-13, T-14 (requiere que todos entreguen)  
 **Notas:**  
 El PDF exige trazabilidad obligatoria:  

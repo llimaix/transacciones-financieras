@@ -1,0 +1,80 @@
+<mxfile host="app.diagrams.net" agent="TranscFins" version="24.0.0">
+  <diagram id="relaciones-componentes" name="Relaciones entre Componentes">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- C-01 -->
+        <mxCell id="c01" value="C-01&#10;API / Controlador" style="shape=component;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Aplicación -->
+        <mxCell id="c02" value="C-02&#10;Servicio de Transferencias" style="shape=component;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="180" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c03" value="C-03&#10;Servicio de Cuentas" style="shape=component;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c04" value="C-04&#10;Servicio de Consulta" style="shape=component;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="180" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Dominio -->
+        <mxCell id="c05" value="C-05&#10;Motor de Reglas / Validaciones" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="370" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c06" value="C-06&#10;Procesador de Transacción Atómica" style="shape=component;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="370" width="230" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Infraestructura -->
+        <mxCell id="c07" value="C-07&#10;Repositorio de Cuentas" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="560" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c08" value="C-08&#10;Repositorio de Historial" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="560" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Anticorrupción -->
+        <mxCell id="c09" value="C-09&#10;Adaptador On-Premise" style="shape=component;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="370" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="onprem" value="Sistemas on-premise" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="950" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Relaciones con etiquetas de interacción -->
+        <mxCell id="r1" value="delega orquestación" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" edge="1" parent="1" source="c01" target="c02"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r2" value="delega orquestación" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="c01" target="c03"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r3" value="delega orquestación" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="c01" target="c04"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="r4" value="solicita validación" style="endArrow=classic;html=1;strokeColor=#82b366;fontSize=10;" edge="1" parent="1" source="c02" target="c05"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r5" value="ordena proceso atómico" style="endArrow=classic;html=1;strokeColor=#82b366;fontSize=10;" edge="1" parent="1" source="c02" target="c06"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r6" value="registra resultado" style="endArrow=classic;html=1;strokeColor=#82b366;fontSize=10;" edge="1" parent="1" source="c02" target="c08"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r7" value="invoca servicio externo" style="endArrow=classic;html=1;dashed=1;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="c02" target="c09"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="r8" value="crea / consulta cuentas" style="endArrow=classic;html=1;strokeColor=#82b366;fontSize=10;" edge="1" parent="1" source="c03" target="c07"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r9" value="consulta historial" style="endArrow=classic;html=1;strokeColor=#82b366;fontSize=10;" edge="1" parent="1" source="c04" target="c08"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="r10" value="lee saldos" style="endArrow=classic;html=1;strokeColor=#d79b00;fontSize=10;" edge="1" parent="1" source="c05" target="c07"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r11" value="verifica duplicados" style="endArrow=classic;html=1;strokeColor=#d79b00;fontSize=10;" edge="1" parent="1" source="c05" target="c08"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r12" value="debita / acredita (ACID)" style="endArrow=classic;html=1;strokeColor=#d79b00;fontSize=10;fontStyle=1;" edge="1" parent="1" source="c06" target="c07"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="r13" value="VPN · API/SOAP" style="endArrow=classic;startArrow=classic;html=1;dashed=1;strokeColor=#b85450;fontSize=10;" edge="1" parent="1" source="c09" target="onprem"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Leyenda -->
+        <mxCell id="leg" value="Leyenda de capas" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=none;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="370" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="Presentación" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="75" y="400" width="170" height="24" as="geometry" /></mxCell>
+        <mxCell id="leg2" value="Aplicación" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="75" y="430" width="170" height="24" as="geometry" /></mxCell>
+        <mxCell id="leg3" value="Dominio" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1"><mxGeometry x="75" y="460" width="170" height="24" as="geometry" /></mxCell>
+        <mxCell id="leg4" value="Infraestructura" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1"><mxGeometry x="75" y="490" width="170" height="24" as="geometry" /></mxCell>
+        <mxCell id="leg5" value="Anticorrupción" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1"><mxGeometry x="75" y="520" width="170" height="24" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

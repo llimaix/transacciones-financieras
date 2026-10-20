@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net" agent="TranscFins" version="24.0.0">
+  <diagram id="clases" name="Diagrama de Clases">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TransferenciaService -->
+        <mxCell id="ts" value="TransferenciaService&#10;(C-02)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ts1" value="+ ejecutarTransferencia(solicitud) : Transaccion" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="ts">
+          <mxGeometry y="40" width="240" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- CuentaService -->
+        <mxCell id="cs" value="CuentaService&#10;(C-03)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cs1" value="+ crearCuenta(datos) : Cuenta&#10;+ consultarCuenta(id) : Cuenta" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="cs">
+          <mxGeometry y="40" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ConsultaService -->
+        <mxCell id="qs" value="ConsultaService&#10;(C-04)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="310" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="qs1" value="+ consultarHistorial(criterios) : List&lt;Transaccion&gt;" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="qs">
+          <mxGeometry y="40" width="240" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ValidadorFondos -->
+        <mxCell id="vf" value="ValidadorFondos&#10;(C-05)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="420" y="60" width="300" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="vf1" value="+ validarExistencia(idCuenta) : Boolean&#10;+ validarFondos(cuenta, monto) : Boolean&#10;+ validarMonto(monto) : Boolean&#10;+ esDuplicada(referenciaUnica) : Boolean" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="vf">
+          <mxGeometry y="40" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ProcesadorTransaccion -->
+        <mxCell id="pt" value="ProcesadorTransaccion&#10;(C-06)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="420" y="210" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pt1" value="+ procesar(origen, destino, monto) : Transaccion" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="pt">
+          <mxGeometry y="40" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Cuenta -->
+        <mxCell id="cuenta" value="Cuenta" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="820" y="60" width="260" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="cuentaA" value="- id : String&#10;- titular : String&#10;- saldo : Decimal&#10;- activa : Boolean" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="cuenta">
+          <mxGeometry y="26" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cuentaM" value="+ debitar(monto) : void&#10;+ acreditar(monto) : void&#10;+ getSaldo() : Decimal&#10;+ estaActiva() : Boolean" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="cuenta">
+          <mxGeometry y="96" width="260" height="74" as="geometry" />
+        </mxCell>
+
+        <!-- Transaccion -->
+        <mxCell id="tx" value="Transaccion" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="820" y="280" width="260" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="txA" value="- id : String&#10;- referenciaUnica : String&#10;- cuentaOrigen : String&#10;- cuentaDestino : String&#10;- monto : Decimal&#10;- fecha : DateTime&#10;- estado : EstadoTransaccion&#10;- motivoRechazo : String" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="tx">
+          <mxGeometry y="26" width="260" height="144" as="geometry" />
+        </mxCell>
+
+        <!-- EstadoTransaccion -->
+        <mxCell id="est" value="&lt;&lt;enumeration&gt;&gt;&#10;EstadoTransaccion" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="820" y="500" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="est1" value="EXITOSA&#10;RECHAZADA&#10;PENDIENTE" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="est">
+          <mxGeometry y="40" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- CuentaRepository -->
+        <mxCell id="cr" value="CuentaRepository&#10;(C-07)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="420" y="340" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cr1" value="+ obtener(id) : Cuenta&#10;+ guardar(cuenta) : void&#10;+ actualizarSaldo(id, saldo) : void" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="cr">
+          <mxGeometry y="40" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- HistorialRepository -->
+        <mxCell id="hr" value="HistorialRepository&#10;(C-08)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="420" y="480" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="hr1" value="+ guardar(transaccion) : void&#10;+ buscar(criterios) : List&lt;Transaccion&gt;&#10;+ existeReferencia(ref) : Boolean" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="hr">
+          <mxGeometry y="40" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- AdaptadorOnPremise -->
+        <mxCell id="ad" value="AdaptadorOnPremise&#10;(C-09)" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="430" width="300" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ad1" value="+ invocarServicioExterno(peticion) : Respuesta" style="text;align=left;verticalAlign=top;spacingLeft=4;html=1;fontSize=11;" vertex="1" parent="ad">
+          <mxGeometry y="40" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Relaciones -->
+        <mxCell id="r1" value="usa" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="ts" target="vf"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r2" value="usa" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="ts" target="pt"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r3" value="registra" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="ts" target="hr"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r4" value="integra" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="ts" target="ad"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r5" value="usa" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="cs" target="cr"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r6" value="consulta" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="qs" target="hr"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r7" value="lee saldos" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="vf" target="cr"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r8" value="debita/acredita" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="pt" target="cr"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r9" value="crea" style="endArrow=open;dashed=1;html=1;fontSize=10;" edge="1" parent="1" source="pt" target="tx"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r10" value="gestiona" style="endArrow=diamondThin;endFill=1;html=1;fontSize=10;" edge="1" parent="1" source="cr" target="cuenta"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r11" value="gestiona" style="endArrow=diamondThin;endFill=1;html=1;fontSize=10;" edge="1" parent="1" source="hr" target="tx"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r12" value="tiene" style="endArrow=diamondThin;endFill=1;html=1;fontSize=10;" edge="1" parent="1" source="tx" target="est"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
