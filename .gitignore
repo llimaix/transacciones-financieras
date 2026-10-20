@@ -4,3 +4,5 @@
 # Temporales de conversión/exportación
 _*.html
 *.tmp
+
+.kiro/
