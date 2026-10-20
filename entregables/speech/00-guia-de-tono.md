@@ -34,3 +34,23 @@ El objetivo no es "ganarle" a quien pregunta, sino **dar confianza al cliente**.
 - Mirar al cliente, no a la pantalla.
 - Cerrar cada parte pasando la palabra al siguiente ("…y sobre esto, Fabiola les cuenta…").
 - Si se traban, respirar y retomar desde el beneficio: "lo importante aquí es que…".
+
+---
+
+## Glosario de siglas (para responder con propiedad)
+
+Estas son las siglas que aparecen en toda la documentación. Si el cliente o el evaluador pregunta por alguna, cualquiera del equipo debe poder explicarla:
+
+| Sigla | Significado | Qué es, en una frase |
+|-------|-------------|----------------------|
+| **RF** | Requerimiento Funcional | Una acción concreta que el sistema debe permitir (ej. "transferir fondos"). |
+| **RNF** | Requerimiento No Funcional | Un atributo de calidad: qué tan seguro, confiable o consistente debe ser (ej. "consistencia financiera"). |
+| **RB** | Regla de Negocio | Una condición del negocio que el sistema debe respetar (ej. "el monto debitado es igual al acreditado"). |
+| **CU** | Caso de Uso | Cómo interactúa un actor con el sistema para lograr un objetivo (ej. "realizar una transferencia"). |
+| **C** | Componente | Una pieza del sistema con una responsabilidad clara (ej. C-06, el procesador de transacción atómica). |
+| **CP** | Caso de Prueba | Un escenario concreto para verificar que algo funciona (normal, alterno o de error). |
+| **CA** | Criterio de Aceptación | La condición verificable que define cuándo una prueba se considera superada (formato Dado/Cuando/Entonces). |
+| **WF** | Wireframe | El boceto de una pantalla de la interfaz (ej. WF-03, el formulario de transferencia). |
+
+### Cómo leer la trazabilidad en voz alta
+La cadena del proyecto se lee así: **un RF** (lo que se necesita) → **un CU** (cómo se usa) → **un C / clase** (cómo se diseña) → **un CP y su CA** (cómo se prueba). Esa es la frase que resume por qué todo está conectado.
